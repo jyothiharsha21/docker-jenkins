@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodExpress Hyderabad - Online Food Delivery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            color: #ff3c00;
+            font-size: 24px;
+        }
+
+        .logo i {
+            color: #ff3c00;
+            font-size: 28px;
+            margin-right: 10px;
+        }
+
+        .location-selector {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .location-selector i {
+            margin-right: 5px;
+            color: #ff3c00;
+        }
+
+        .location-selector span {
+            font-weight: 500;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 2px;
+        }
+
+        .user-actions a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .user-actions a.sign-in {
+            color: #ff3c00;
+        }
+
+        .header-bottom {
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            margin-right: 20px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            padding-left: 45px;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon i {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ff3c00;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        /* Banner Styles */
+        .banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 5%;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .banner h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .banner p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 25px;
+        }
+
+        .banner button {
+            background-color: #ff3c00;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .banner button:hover {
+            background-color: #e53500;
+        }
+
+        /* Restaurant Filters */
+        .filters {
+            padding: 0 5%;
+            margin-bottom: 30px;
+        }
+
+        .filter-scroll {
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            gap: 15px;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+            cursor: pointer;
+        }
+
+        .filter-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-icon i {
+            font-size: 20px;
+            color: #ff3c00;
+        }
+
+        .filter-item span {
+            font-size: 14px;
+            text-align: center;
+        }
+
+        /* Restaurant Listings */
+        .restaurant-list {
+            padding: 0 5%;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .restaurant-card {
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .restaurant-image {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .restaurant-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .restaurant-card:hover .restaurant-image img {
+            transform: scale(1.05);
+        }
+
+        .restaurant-info {
+            padding: 15px;
+        }
+
+        .restaurant-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .restaurant-cuisine {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .restaurant-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .rating {
+            background-color: #eee;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .rating i {
+            color: #ff3c00;
+            margin-right: 5px;
+        }
+
+        .delivery-time {
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #fff;
+            padding: 40px 5%;
+            margin-top: 60px;
+            border-top: 1px solid #eee;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            text-decoration: none;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ff3c00;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 350px;
+            height: 100vh;
+            background-color: #fff;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .cart-modal.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-header h2 {
+            font-size: 22px;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-details h4 {
+            margin-bottom: 5px;
+        }
+
+        .item-price {
+            color: #ff3c00;
+            font-weight: 500;
+        }
+
+        .item-quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .quantity {
+            margin: 0 10px;
+        }
+
+        .cart-total {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #ff3c00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: #e53500;
+        }
+
+        /* Location Modal */
+        .location-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .location-modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .location-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .location-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .location-header h2 {
+            font-size: 22px;
+        }
+
+        .close-location {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .location-input {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .location-input input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            padding-left: 45px;
+        }
+
+        .location-input i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .city-btn {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: none;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .city-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        .city-btn.active {
+            border-color: #ff3c00;
+            background-color: #fff0ec;
+            color: #ff3c00;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .location-selector {
+                margin: 10px 0;
+            }
+
+            .user-actions {
+                align-self: flex-end;
+            }
+
+            .header-bottom {
+                flex-direction: column;
+            }
+
+            .search-bar {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .restaurant-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <h1>FoodExpress</h1>
+            </div>
+            <div class="location-selector" id="locationSelector">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Hyderabad, Telangana</span>
+            </div>
+            <div class="user-actions">
+                <a href="#" class="sign-in"><i class="fas fa-user"></i> Sign In</a>
+                <a href="#"><i class="fas fa-enterprise"></i> For Businesses</a>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for restaurants or food">
+            </div>
+            <div class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner Section -->
+    <section class="banner">
+        <h2>Craving Hyderabadi Biryani?</h2>
+        <p>Order from Hyderabad's best restaurants and get food delivered to your doorstep.</p>
+        <button>Order Now</button>
+    </section>
+
+    <!-- Restaurant Filters -->
+    <section class="filters">
+        <div class="filter-scroll">
+            <div class="filter-item">
+                <div class="filter-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <span>Biryani</span>
+            </div>
+            <div class="filter-item">
+                <div class="filter-icon">
+                    <i class="fas fa-drumstick-bite"></i>
+                </div>
+                <span>Grill</span>
+            </div>
+            <div class="filter-item">
+                <div class="filter-icon">
+                    <i class="fas fa-bread-slice"></i>
+                </div>
+                <span>Bakery</span>
+            </div>
+            <div class="filter-item">
+                <div class="filter-icon">
+                    <i class="fas fa-ice-cream"></i>
+                </div>
+                <span>Desserts</span>
+            </div>
+            <div class="filter-item">
+                <div class="filter-icon">
+                    <i class="fas fa-mug-hot"></i>
+                </div>
+                <span>Beverages</span>
+            </div>
+            <div class="filter-item">
+                <div class="filter-icon">
+                    <i class="fas fa-pizza-slice"></i>
+                </div>
+                <span>Pizza</span>
+            </div>
+            <div class="filter-item">
+                <div class="filter-icon">
+                    <i class="fas fa-hamburger"></i>
+                </div>
+                <span>Burgers</span>
+            </div>
+            <div class="filter-item">
+                <div class="filter-icon">
+                    <i class="fas fa-cheese"></i>
+                </div>
+                <span>Italian</span>
+            </div>
+            <div class="filter-item">
+                <div class="filter-icon">
+                    <i class="fas fa-egg"></i>
+                </div>
+                <span>Breakfast</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Restaurant Listings -->
+    <section class="restaurant-list">
+        <h2 class="section-title">Popular Restaurants in Hyderabad</h2>
+        <div class="restaurant-grid" id="restaurantGrid">
+            <!-- Restaurant cards will be generated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>FoodExpress</h3>
+                <ul>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">Help & Support</a></li>
+                    <li><a href="#">Partner with us</a></li>
+                    <li><a href="#">Ride with us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Refund & Cancellation</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2023 FoodExpress. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be added here -->
+        </div>
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotal">₹0.00</span>
+        </div>
+        <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+
+    <!-- Location Modal -->
+    <div class="location-modal" id="locationModal">
+        <div class="location-content">
+            <div class="location-header">
+                <h2>Select Your Location</h2>
+                <button class="close-location" id="closeLocation">&times;</button>
+            </div>
+            <div class="location-input">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for area, street name...">
+            </div>
+            <h3>Popular Cities</h3>
+            <div class="cities-grid">
+                <button class="city-btn" data-city="Hyderabad">Hyderabad</button>
+                <button class="city-btn" data-city="Bangalore">Bangalore</button>
+                <button class="city-btn" data-city="Mumbai">Mumbai</button>
+                <button class="city-btn" data-city="Delhi">Delhi</button>
+                <button class="city-btn" data-city="Chennai">Chennai</button>
+                <button class="city-btn" data-city="Kolkata">Kolkata</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample restaurant data for Hyderabad
+        const restaurants = [
+            {
+                id: 1,
+                name: "Paradise Biryani",
+                cuisine: "Hyderabadi, Biryani, Indian",
+                image: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                rating: 4.5,
+                deliveryTime: "30-40 min",
+                items: [
+                    { id: 101, name: "Hyderabadi Dum Biryani", price: 299 },
+                    { id: 102, name: "Chicken 65", price: 249 },
+                    { id: 103, name: "Mutton Biryani", price: 399 }
+                ]
+            },
+            {
+                id: 2,
+                name: "Chutneys",
+                cuisine: "South Indian, Breakfast",
+                image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                rating: 4.2,
+                deliveryTime: "25-35 min",
+                items: [
+                    { id: 201, name: "Masala Dosa", price: 99 },
+                    { id: 202, name: "Idli Sambar", price: 79 },
+                    { id: 203, name: "Uttapam", price: 119 }
+                ]
+            },
+            {
+                id: 3,
+                name: "Bawarchi",
+                cuisine: "North Indian, Biryani",
+                image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                rating: 4.7,
+                deliveryTime: "40-50 min",
+                items: [
+                    { id: 301, name: "Chicken Biryani", price: 275 },
+                    { id: 302, name: "Paneer Butter Masala", price: 225 },
+                    { id: 303, name: "Butter Naan", price: 60 }
+                ]
+            },
+            {
+                id: 4,
+                name: "Ohri's Jiva Imperia",
+                cuisine: "Multi-cuisine, Chinese",
+                image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                rating: 4.4,
+                deliveryTime: "35-45 min",
+                items: [
+                    { id: 401, name: "Hakka Noodles", price: 199 },
+                    { id: 402, name: "Manchurian", price: 179 },
+                    { id: 403, name: "Crispy Corn", price: 159 }
+                ]
+            },
+            {
+                id: 5,
+                name: "Cafe Bahar",
+                cuisine: "Hyderabadi, Biryani",
+                image: "https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                rating: 4.3,
+                deliveryTime: "30-40 min",
+                items: [
+                    { id: 501, name: "Special Chicken Biryani", price: 285 },
+                    { id: 502, name: "Mirchi Ka Salan", price: 120 },
+                    { id: 503, name: "Double Ka Meetha", price: 110 }
+                ]
+            },
+            {
+                id: 6,
+                name: "Almond House",
+                cuisine: "Desserts, Bakery",
+                image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                rating: 4.8,
+                deliveryTime: "25-35 min",
+                items: [
+                    { id: 601, name: "Chocolate Pastry", price: 85 },
+                    { id: 602, name: "Fruit Cake", price: 120 },
+                    { id: 603, name: "Badam Milk", price: 70 }
+                ]
+            }
+        ];
+
+        // Cart functionality
+        let cart = [];
+        const cartIcon = document.getElementById('cartIcon');
+        const cartModal = document.getElementById('cartModal');
+        const closeCart = document.getElementById('closeCart');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const cartCount = document.querySelector('.cart-count');
+        const locationSelector = document.getElementById('locationSelector');
+        const locationModal = document.getElementById('locationModal');
+        const closeLocation = document.getElementById('closeLocation');
+        const cityButtons = document.querySelectorAll('.city-btn');
+
+        // Generate restaurant cards
+        const restaurantGrid = document.getElementById('restaurantGrid');
+        
+        restaurants.forEach(restaurant => {
+            const card = document.createElement('div');
+            card.className = 'restaurant-card';
+            card.innerHTML = `
+                <div class="restaurant-image">
+                    <img src="${restaurant.image}" alt="${restaurant.name}">
+                </div>
+                <div class="restaurant-info">
+                    <h3 class="restaurant-name">${restaurant.name}</h3>
+                    <p class="restaurant-cuisine">${restaurant.cuisine}</p>
+                    <div class="restaurant-meta">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <span>${restaurant.rating}</span>
+                        </div>
+                        <div class="delivery-time">${restaurant.deliveryTime}</div>
+                    </div>
+                </div>
+            `;
+            
+            // Add click event to show menu items
+            card.addEventListener('click', () => {
+                showMenuItems(restaurant);
+            });
+            
+            restaurantGrid.appendChild(card);
+        });
+
+        // Show menu items for a restaurant
+        function showMenuItems(restaurant) {
+            // In a real app, this would open a menu modal or navigate to a menu page
+            alert(`Viewing menu for ${restaurant.name}. In a real app, this would show the full menu.`);
+            
+            // For demo purposes, add the first item to cart
+            addToCart(restaurant.items[0]);
+        }
+
+        // Add item to cart
+        function addToCart(item) {
+            const existingItem = cart.find(cartItem => cartItem.id === item.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...item, quantity: 1});
+            }
+            
+            updateCart();
+        }
+
+        // Update cart UI
+        function updateCart() {
+            // Clear cart items
+            cartItems.innerHTML = '';
+            
+            // Add items to cart
+            let total = 0;
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="item-details">
+                        <h4>${item.name}</h4>
+                        <div class="item-price">₹${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="item-quantity">
+                        <button class="quantity-btn decrease" data-id="${item.id}">-</button>
+                        <span class="quantity">${item.quantity}</span>
+                        <button class="quantity-btn increase" data-id="${item.id}">+</button>
+                    </div>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            // Update total and count
+            cartTotal.textContent = `₹${total.toFixed(2)}`;
+            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.increase').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.getAttribute('data-id'));
+                    const item = cart.find(item => item.id === id);
+                    item.quantity += 1;
+                    updateCart();
+                });
+            });
+            
+            document.querySelectorAll('.decrease').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.getAttribute('data-id'));
+                    const item = cart.find(item => item.id === id);
+                    
+                    if (item.quantity > 1) {
+                        item.quantity -= 1;
+                    } else {
+                        cart = cart.filter(item => item.id !== id);
+                    }
+                    
+                    updateCart();
+                });
+            });
+        }
+
+        // Toggle cart modal
+        cartIcon.addEventListener('click', () => {
+            cartModal.classList.add('open');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartModal.classList.remove('open');
+        });
+
+        // Toggle location modal
+        locationSelector.addEventListener('click', () => {
+            locationModal.classList.add('open');
+        });
+
+        closeLocation.addEventListener('click', () => {
+            locationModal.classList.remove('open');
+        });
+
+        // Handle city selection
+        cityButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const city = button.getAttribute('data-city');
+                
+                // Remove active class from all buttons
+                cityButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Update location text after a short delay
+                setTimeout(() => {
+                    document.querySelector('.location-selector span').textContent = `${city}`;
+                    locationModal.classList.remove('open');
+                    
+                    // Show confirmation message
+                    alert(`Location changed to ${city}. In a real app, this would update restaurant listings.`);
+                }, 500);
+            });
+        });
+
+        // Initialize the page
+        updateCart();
+    </script>
+</body>
+</html>
